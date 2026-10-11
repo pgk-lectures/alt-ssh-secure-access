@@ -200,6 +200,14 @@ NAT
 
 **Где выполняем:** VMware Workstation.
 
+Сначала скачайте образ. Работа рассчитана на **Альт Сервер 11.1** (x86_64):
+
+~~~text
+https://download.basealt.ru/pub/distributions/ALTLinux/p11/images/server/x86_64/alt-server-11.1-x86_64.iso
+~~~
+
+Страница загрузки: [getalt.org](https://getalt.org/). Нужен именно «Альт Сервер», а не Рабочая станция или другие редакции.
+
 1. Откройте VMware Workstation.
 2. Выберите **File → New Virtual Machine**.
 3. Выберите **Typical (recommended)**.
@@ -224,7 +232,7 @@ HQ-SRV
 17. Для процессора достаточно 2 ядер.
 18. Откройте **CD/DVD**.
 19. Выберите **Use ISO image file**.
-20. Укажите ISO-образ «Альт Сервер».
+20. Укажите ISO-образ «Альт Сервер» (где скачать, см. ниже).
 21. Откройте **Network Adapter**.
 22. Убедитесь, что выбран режим **NAT**.
 23. Нажмите **Close**.
@@ -800,16 +808,17 @@ timedatectl
 timedatectl list-timezones | grep -i Europe/
 ~~~
 
-Укажите часовой пояс места проведения экзамена. Название формата `Регион/Город`. Узнайте у преподавателя, какой пояс нужен. Для примера возьмём Москву:
+Укажите часовой пояс места проведения экзамена. Название формата `Регион/Город`. В этой работе используем Самару (`Europe/Samara`):
 
 ~~~bash
-timedatectl set-timezone Europe/Moscow
+timedatectl set-timezone Europe/Samara
 ~~~
 
-Подставьте свой город, если пояс другой, например:
+Если преподаватель назовёт другой город, подставьте его значение:
 
 | Город | Значение |
 |---|---|
+| Самара (используем в работе) | `Europe/Samara` |
 | Москва | `Europe/Moscow` |
 | Екатеринбург | `Asia/Yekaterinburg` |
 | Омск | `Asia/Omsk` |
@@ -826,7 +835,7 @@ date
 Ожидаемо:
 
 ~~~text
-Time zone: Europe/Moscow (MSK, +0300)
+Time zone: Europe/Samara (+04, +0400)
 ~~~
 
 Время в строке `date` должно совпадать с вашим местным временем. Если оно отстаёт или спешит на несколько часов, проверьте, что пояс выбран верно. Если расхождение в минутах, это обычная погрешность часов виртуальной машины, и для задания значения не имеет.
@@ -886,7 +895,7 @@ timedatectl | grep 'Time zone'
 | `ss` | слушается только порт 2026 |
 | `is-enabled` | `enabled` |
 | `is-active` | `active` |
-| часовой пояс | ваш пояс, например `Europe/Moscow` |
+| часовой пояс | `Europe/Samara` |
 
 Затем проверьте работу по сети с обеих сторон:
 
@@ -1215,7 +1224,7 @@ date
 Если пояс верный, а время отличается на минуты, это погрешность часов ВМ. Если отличается на часы, значит, выбран не тот пояс. Задайте нужный:
 
 ~~~bash
-timedatectl set-timezone Europe/Moscow
+timedatectl set-timezone Europe/Samara
 ~~~
 
 ### `Failed to set time zone: Invalid time zone`
@@ -1223,10 +1232,10 @@ timedatectl set-timezone Europe/Moscow
 Опечатка в названии. Найдите правильное:
 
 ~~~bash
-timedatectl list-timezones | grep -i moscow
+timedatectl list-timezones | grep -i samara
 ~~~
 
-Регистр важен: `Europe/Moscow`, а не `europe/moscow`.
+Регистр важен: `Europe/Samara`, а не `europe/samara`.
 
 ## Что нужно понимать после выполнения
 
